@@ -1,12 +1,11 @@
 package com.jovf.mediappbackend.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +23,11 @@ public class Menu {
 
     @Column(name = "url", nullable = false, length = 50)
     private String url;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "menu_rol",
+            joinColumns = @JoinColumn(name = "id_menu", referencedColumnName = "idMenu"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "idRol"))
+    private List<Rol> roles;
+
 }

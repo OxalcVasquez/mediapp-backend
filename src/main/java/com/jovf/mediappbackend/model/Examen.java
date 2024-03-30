@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Setter
 @Getter
 @Entity
@@ -21,4 +23,16 @@ public class Examen {
     @Column(name = "descripcion", nullable = false, length = 50)
     private String descripcion;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Examen examen = (Examen) o;
+        return Objects.equals(idExamen, examen.idExamen);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idExamen);
+    }
 }
