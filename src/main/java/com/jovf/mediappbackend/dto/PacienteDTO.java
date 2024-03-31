@@ -15,11 +15,11 @@ public class PacienteDTO {
     private Integer idPaciente;
 
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3,message = "{nombres.size}")
     private String nombres;
 
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, message = "{apellidos.size}")
     private String apellidos;
 
     @NotNull
