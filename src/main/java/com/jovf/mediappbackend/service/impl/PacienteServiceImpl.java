@@ -19,7 +19,7 @@ public class PacienteServiceImpl extends CRUDImpl<Paciente, Integer> implements 
     private IPacienteRepo repo;
 
     @Override
-    protected IGenericRepo getRepo() {
+    protected IGenericRepo<Paciente, Integer> getRepo() {
         return repo;
     }
 }

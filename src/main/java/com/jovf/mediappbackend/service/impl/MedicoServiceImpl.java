@@ -3,6 +3,7 @@ package com.jovf.mediappbackend.service.impl;
 import com.jovf.mediappbackend.model.Medico;
 import com.jovf.mediappbackend.model.Paciente;
 import com.jovf.mediappbackend.repo.IGenericRepo;
+import com.jovf.mediappbackend.repo.IMedicoRepo;
 import com.jovf.mediappbackend.repo.IPacienteRepo;
 import com.jovf.mediappbackend.service.IMedicoService;
 import com.jovf.mediappbackend.service.IPacienteService;
@@ -18,11 +19,11 @@ import java.util.Optional;
 public class MedicoServiceImpl extends CRUDImpl<Medico,Integer> implements IMedicoService {
 
     @Autowired
-    private IPacienteRepo repo;
+    private IMedicoRepo repo;
 
 
     @Override
-    protected IGenericRepo getRepo() {
+    protected IGenericRepo<Medico,Integer> getRepo() {
         return repo;
     }
 }
