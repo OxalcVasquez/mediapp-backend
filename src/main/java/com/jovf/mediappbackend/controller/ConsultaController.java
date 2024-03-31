@@ -1,11 +1,14 @@
 package com.jovf.mediappbackend.controller;
 
 import com.jovf.mediappbackend.dto.ConsultaDTO;
+import com.jovf.mediappbackend.dto.ConsultaListaExamenDTO;
 import com.jovf.mediappbackend.exception.ModeloNotFoundException;
 import com.jovf.mediappbackend.model.Consulta;
+import com.jovf.mediappbackend.model.Examen;
 import com.jovf.mediappbackend.service.IConsultaService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -55,12 +58,13 @@ public class ConsultaController {
 //    }
 
     @PostMapping
-    public ResponseEntity<Void> registrar(@Valid @RequestBody ConsultaDTO dto) throws Exception {
-        Consulta p = mapper.map(dto,Consulta.class);
-        Consulta obj = service.registrar(p);
+    public ResponseEntity<Void> registrar(@Valid @RequestBody ConsultaListaExamenDTO dto) throws Exception {
+        Consulta c = mapper.map(dto.getConsulta(),Consulta.class);
+        List<Examen> examenes = mapper.map(dto.getListExamen(),new TypeToken<List<Examen>>() {}.getType());
+        Consulta obj = service.registrarTransaccional(c,examenes);
         // se quiere devolver la URL
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConsulta()).toUri();
-        return ResponseEntity.created(location).build();
+//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConsulta()).toUri();
+        return ResponseEntity.created(null).build();
     }
 
     @PutMapping
