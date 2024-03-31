@@ -1,5 +1,6 @@
 package com.jovf.mediappbackend.controller;
 
+import com.jovf.mediappbackend.exception.ModeloNotFoundException;
 import com.jovf.mediappbackend.model.Paciente;
 import com.jovf.mediappbackend.service.IPacienteService;
 import jakarta.servlet.Servlet;
@@ -27,8 +28,13 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> listar(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Paciente> listarPorId(@PathVariable Integer id) throws Exception {
         Paciente obj = service.listarPorId(id);
+
+        if(obj == null){
+            throw new ModeloNotFoundException("ID NO ENCONTRADO " + id);
+        }
+
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
@@ -48,12 +54,25 @@ public class PacienteController {
 
     @PutMapping
     public ResponseEntity<Paciente> modificar(@RequestBody Paciente p) throws Exception {
-        Paciente obj = service.registrar(p);
-        return new ResponseEntity<>(obj, HttpStatus.OK);
+        Paciente obj = service.listarPorId(p.getIdPaciente());
+
+        if(obj == null){
+            throw new ModeloNotFoundException("ID NO ENCONTRADO " + p.getIdPaciente());
+        }
+
+        Paciente pac = service.registrar(p);
+
+        return new ResponseEntity<>(pac, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) throws Exception {
+        Paciente obj = service.listarPorId(id);
+
+        if(obj == null){
+            throw new ModeloNotFoundException("ID NO ENCONTRADO " + id);
+        }
+
         service.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
