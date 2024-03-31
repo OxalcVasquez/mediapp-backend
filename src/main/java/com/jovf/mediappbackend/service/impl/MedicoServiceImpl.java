@@ -1,8 +1,10 @@
 package com.jovf.mediappbackend.service.impl;
 
+import com.jovf.mediappbackend.model.Medico;
 import com.jovf.mediappbackend.model.Paciente;
 import com.jovf.mediappbackend.repo.IGenericRepo;
 import com.jovf.mediappbackend.repo.IPacienteRepo;
+import com.jovf.mediappbackend.service.IMedicoService;
 import com.jovf.mediappbackend.service.IPacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,10 +15,11 @@ import java.util.Optional;
 
 
 @Service
-public class PacienteServiceImpl extends CRUDImpl<Paciente, Integer> implements IPacienteService {
+public class MedicoServiceImpl extends CRUDImpl<Medico,Integer> implements IMedicoService {
 
     @Autowired
     private IPacienteRepo repo;
+
 
     @Override
     protected IGenericRepo getRepo() {
